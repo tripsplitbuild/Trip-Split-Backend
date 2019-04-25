@@ -13,7 +13,7 @@ server.use(logger('dev'));
 server.use(cors());
 server.use(express.json());
 
-server.use('/user', userRouter);
+server.use('/users', userRouter);
 
 server.get('/', async(req,res) => {
   res.status(200).json({ message: 'Welcome'})

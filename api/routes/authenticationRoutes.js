@@ -10,6 +10,18 @@ const server = express.Router();
 
 const jwtKey = process.env.JWT_SECRET;
 
+function generateToken(user){
+  const payload = {
+    subject: user.id,
+    username: user.username
+  };
+
+  const options ={
+    expiresIn: '1d'
+  };
+  return jwt.sign(payload, jwtKey, options)
+};
+
 server.post('/register', (req,res) => {
   let user = req.body;
   const hash = bcrypt.hashSync(user.password, 10)
@@ -18,7 +30,7 @@ server.post('/register', (req,res) => {
   Users.add(user)
     .then(saved => {
       const token = generateToken(user);
-      res.status(201).json({saved, token});
+      res.status(201).json({id: saved.id, token});
     })
     .catch(error => {
       res.status(500).json(error);
@@ -44,17 +56,5 @@ server.post('/login', (req,res) => {
       res.status(500).json(error);
     });
 });
-
-function generateToken(user){
-  const payload = {
-    subject: user.id,
-    username: user.username
-  };
-
-  const options ={
-    expiresIn: '1d'
-  };
-  return jwt.sign(payload, jwtKey, options)
-};
 
 module.exports = server;

@@ -4,7 +4,7 @@ const helmet = require('helmet');
 const logger = require('morgan');
 
 
-const userRouter = require('./routes/userRoutes.js');
+const authenticateRouter = require('./routes/authenticationRoutes.js');
 
 const server = express();
 
@@ -13,7 +13,7 @@ server.use(logger('dev'));
 server.use(cors());
 server.use(express.json());
 
-server.use('/users', userRouter);
+server.use('/authentication', authenticateRouter);
 
 server.get('/', async(req,res) => {
   res.status(200).json({ message: 'Welcome'})

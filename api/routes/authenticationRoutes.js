@@ -46,7 +46,8 @@ server.post('/login', (req,res) => {
         const token = generateToken(user);
         res.status(200).json({
           token,
-          message: `Welcome ${user.username}!`
+          message: `Welcome ${user.username}!`,
+          id: user.id
         })
       } else {
         res.status(401).json({message: 'Invalid Credentials'})

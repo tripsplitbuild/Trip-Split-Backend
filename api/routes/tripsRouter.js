@@ -17,7 +17,6 @@ server.get('/:id', authenticate, (req,res) =>{
   Trips
     .findById(id)
     .then(foundTrip => {
-      console.log(foundTrip)
       res.json(foundTrip)
     })
     .catch(err => {
@@ -35,6 +34,19 @@ server.post('/', authenticate, (req,res) => {
     })
     .catch(err => {
       console.log(err)
+      return errorHelper(500, 'Internal Server Error', res);
+    })
+})
+
+server.delete('/:id', authenticate, (req,res) => {
+  const { id } = req.params;
+
+  Trips
+    .remove(id)
+    .then(trip => {
+      res.status(200).json(trip)
+    })
+    .catch(err => {
       return errorHelper(500, 'Internal Server Error', res);
     })
 })

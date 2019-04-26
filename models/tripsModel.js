@@ -5,8 +5,9 @@ module.exports = {
  findBy,
  findById,
  add,
- edit
-};
+ edit,
+ remove
+}
 
 function find() {
   return db('trips').select('id', 'trip_name');
@@ -34,4 +35,10 @@ async function edit(id, changes){
   .update(changes)
 
   return findById(id);
+}
+
+function remove(id){
+  return db('trips')
+  .where('id', id)
+  .del();
 }

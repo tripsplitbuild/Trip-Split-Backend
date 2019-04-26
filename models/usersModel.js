@@ -5,7 +5,8 @@ module.exports = {
  findBy,
  findById,
  add,
- edit
+ edit,
+ findByIdWithTrips
 };
 
 
@@ -27,6 +28,12 @@ function findById(id){
   return db('users')
     .where({ id })
     .first()
+}
+
+function findByIdWithTrips(id){
+  return db('users')
+    .leftJoin('trips', 'trips.user_id', 'users.id')
+    .where('users.id', id)
 }
 
 async function edit(id, changes){

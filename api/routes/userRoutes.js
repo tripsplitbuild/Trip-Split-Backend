@@ -13,11 +13,12 @@ const errorHelper = (status, message, res) => {
 server.get('/:id', authenticate, (req,res) => {
   const { id } = req.params;
   Users
-    .findById(id)
+    .findByIdWithTrips(id)
     .then(foundUser => {
       res.json(foundUser)
     })
     .catch(err => {
+      console.log(err)
       return errorHelper(500, 'Internal Server Error', res);
     })
 })

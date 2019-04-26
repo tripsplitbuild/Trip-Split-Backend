@@ -51,6 +51,21 @@ server.delete('/:id', authenticate, (req,res) => {
     })
 })
 
+server.put('/:id', authenticate, (req,res) =>{
+  const { id } = req.params;
+
+  const changes = req.body;
+
+  Trips
+   .edit(id, changes)
+   .then(editedData => {
+     res.status(200).json(editedData)
+   })
+   .catch(err => {
+     return errorHelper(500, 'Internal Server Error', res);
+   })
+})
+
 
 
 module.exports = server;

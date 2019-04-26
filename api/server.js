@@ -6,6 +6,7 @@ const logger = require('morgan');
 
 const authenticateRouter = require('./routes/authenticationRoutes.js');
 const userRouter = require('./routes/userRoutes.js');
+const tripRouter = require('./routes/tripsRouter.js');
 
 const server = express();
 
@@ -16,6 +17,7 @@ server.use(express.json());
 
 server.use('/authentication', authenticateRouter);
 server.use('/users', userRouter);
+server.use('/trips', tripRouter);
 
 server.get('/', async(req,res) => {
   res.status(200).json({ message: 'Welcome'})

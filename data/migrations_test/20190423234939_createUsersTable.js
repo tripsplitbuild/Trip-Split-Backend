@@ -11,6 +11,7 @@ exports.up = function(knex, Promise) {
     users.string('first_name', 255)
     users.string('last_name', 255)
     users.string('gender')
+    users.string('avatar')
     users.string('password', 128).notNullable();
   });
 };

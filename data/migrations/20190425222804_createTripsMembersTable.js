@@ -1,11 +1,13 @@
 
 exports.up = function(knex, Promise) {
-  return knex.schema.createTable('expense', tbl => {
+  return knex.schema.createTable('tripMembers', tbl => {
     tbl.increments();
 
     tbl
-      .string('expense_name', 255)
-      .notNullable();
+      .string('trip_username')
+      .references('username')
+      .inTable('users')
+
     tbl
       .integer('trip_id')
       .unsigned()
@@ -13,11 +15,9 @@ exports.up = function(knex, Promise) {
       .inTable('trips')
       .onDelete('CASCADE')
       .onUpdate('CASCADE')
-    tbl
-      .float('expense_total')
   });
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTableIfExists('expense');
+  return knex.schema.dropTableIfExists('tripMembers');
 };

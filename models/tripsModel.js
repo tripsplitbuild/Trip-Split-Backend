@@ -4,13 +4,14 @@ module.exports = {
  find,
  findBy,
  findById,
+ findMembers,
  add,
  edit,
  remove
 }
 
 function find() {
-  return db('trips').select('id', 'trip_name');
+  return db('trips')
 }
 
 function findBy(filter){
@@ -21,6 +22,12 @@ function findById(id){
   return db('trips')
     .where({ id })
     .first()
+}
+
+function findMembers(id){
+  return db('trips')
+    .leftJoin('tripMembers', 'tripMembers.trip_id', 'trips.id')
+    .where('trips.id', id)
 }
 
 async function add(trips){

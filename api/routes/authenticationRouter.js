@@ -33,6 +33,7 @@ server.post('/register', (req,res) => {
       res.status(201).json({id: saved.id, token});
     })
     .catch(error => {
+      console.log(error)
       res.status(500).json(error);
     });
 });
@@ -54,6 +55,7 @@ server.post('/login', (req,res) => {
       }
     })
     .catch(error => {
+      console.log(error)
       res.status(500).json(error);
     });
 });

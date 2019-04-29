@@ -1,7 +1,8 @@
 const express = require('express');
 const axios = require('axios');
 
-const Users = require('./../../models/usersModel.js')
+const Users = require('./../../models/usersModel.js');
+const Trips = require('./../../models/tripsModel.js');
 const { authenticate } = require('./../../auth/authenticate.js');
 
 const server = express.Router();
@@ -15,7 +16,25 @@ server.get('/:id', authenticate, (req,res) => {
   Users
     .findByIdWithTrips(id)
     .then(foundUser => {
-      res.json(foundUser)
+      let userOwnedTrips = foundUser.map(user => {
+        let id = user.id
+        let trip_name = user.trip_name
+        let tripItem = {
+          id: id,
+          trip_name: trip_name
+        }
+        return tripItem
+      })
+      const userData = {
+        currentUser: foundUser[0].user_id,
+        name: foundUser[0].username,
+        first_name: foundUser[0].first_name,
+        last_name: foundUser[0].last_name,
+        gender: foundUser[0].gender,
+        avatar: foundUser[0].avatar,
+        OwnedTrips: userOwnedTrips
+      }
+      res.json(userData)
     })
     .catch(err => {
       console.log(err)

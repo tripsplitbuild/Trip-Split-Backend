@@ -4,40 +4,33 @@ module.exports = {
  find,
  findBy,
  findById,
- findMembers,
  add,
  edit,
  remove
 }
 
 function find() {
-  return db('trips')
+  return db('tripMembers');
 }
 
 function findBy(filter){
-  return db('trips').where(filter);
+  return db('tripMembers').where(filter);
 };
 
 function findById(id){
-  return db('trips')
+  return db('tripMembers')
     .where({ id })
     .first()
 }
 
-function findMembers(id){
-  return db('trips')
-    .leftJoin('tripMembers', 'tripMembers.trip_id', 'trips.id')
-    .where('trips.id', id)
-}
-
-async function add(trips){
-  const [id] = await db('trips').insert(trips);
+async function add(trip_Members){
+  const [id] = await db('tripMembers').insert(trip_Members);
 
   return findById(id);
 }
 
 async function edit(id, changes){
-  await db('trips')
+  await db('tripMembers')
   .where('id', id)
   .update(changes)
 
@@ -45,7 +38,7 @@ async function edit(id, changes){
 }
 
 function remove(id){
-  return db('trips')
+  return db('tripMembers')
   .where('id', id)
   .del();
 }

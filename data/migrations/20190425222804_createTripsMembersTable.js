@@ -15,6 +15,7 @@ exports.up = function(knex, Promise) {
       .inTable('trips')
       .onDelete('CASCADE')
       .onUpdate('CASCADE')
+      .notNullable()
   });
 };
 

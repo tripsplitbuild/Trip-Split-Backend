@@ -4,9 +4,12 @@ const helmet = require('helmet');
 const logger = require('morgan');
 
 
-const authenticateRouter = require('./routes/authenticationRoutes.js');
-const userRouter = require('./routes/userRoutes.js');
+const authenticateRouter = require('./routes/authenticationRouter.js');
+const userRouter = require('./routes/userRouter.js');
 const tripRouter = require('./routes/tripsRouter.js');
+const tripMemberRouter = require('./routes/tripsMembersRouter.js');
+const expenseRouter = require('./routes/expenseRouter.js');
+const expenseMemberRouter = require('./routes/expenseMemberRouter.js');
 
 const server = express();
 
@@ -18,6 +21,9 @@ server.use(express.json());
 server.use('/authentication', authenticateRouter);
 server.use('/users', userRouter);
 server.use('/trips', tripRouter);
+server.use('/tripMembers', tripMemberRouter);
+server.use('/expense', expenseRouter);
+server.use('/expenseMember', expenseMemberRouter);
 
 server.get('/', async(req,res) => {
   res.status(200).json({ message: 'Welcome'})

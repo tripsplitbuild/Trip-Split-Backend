@@ -2,7 +2,7 @@ const express = require('express');
 const axios = require('axios');
 
 
-const Trips = require('./../../models/tripsModel.js')
+const ExpenseMember = require('./../../models/expenseMemberModel.js')
 const { authenticate } = require('./../../auth/authenticate.js');
 
 const server = express.Router();
@@ -12,10 +12,10 @@ const errorHelper = (status, message, res) => {
 }
 
 server.get('/', authenticate, (req,res) => {
-  Trips
+  ExpenseMember
     .find()
-    .then(trips => {
-      res.json(trips)
+    .then(expenseMember => {
+      res.json(expenseMember)
     })
     .catch(err => {
       return errorHelper(500, 'Internal Server Error', res);
@@ -25,10 +25,10 @@ server.get('/', authenticate, (req,res) => {
 server.get('/:id', authenticate, (req,res) =>{
   const { id } = req.params;
 
-  Trips
-    .findMembers(id)
-    .then(foundTrip => {
-      res.json(foundTrip)
+  ExpenseMember
+    .findById(id)
+    .then(expenseMember => {
+      res.json(expenseMember)
     })
     .catch(err => {
       return errorHelper(500, 'Internal Server Error', res);
@@ -36,12 +36,12 @@ server.get('/:id', authenticate, (req,res) =>{
 })
 
 server.post('/', authenticate, (req,res) => {
-  let trip = req.body;
+  let expenseMember = req.body;
 
-  Trips
-    .add(trip)
-    .then(trip =>{
-      res.status(200).json(trip)
+  ExpenseMember
+    .add(expenseMember)
+    .then(expenseMember =>{
+      res.status(200).json(expenseMember)
     })
     .catch(err => {
       console.log(err)
@@ -52,10 +52,10 @@ server.post('/', authenticate, (req,res) => {
 server.delete('/:id', authenticate, (req,res) => {
   const { id } = req.params;
 
-  Trips
+  ExpenseMember
     .remove(id)
-    .then(trip => {
-      res.status(200).json(trip)
+    .then(expenseMember => {
+      res.status(200).json(expenseMember)
     })
     .catch(err => {
       return errorHelper(500, 'Internal Server Error', res);
@@ -67,7 +67,7 @@ server.put('/:id', authenticate, (req,res) =>{
 
   const changes = req.body;
 
-  Trips
+  ExpenseMember
    .edit(id, changes)
    .then(editedData => {
      res.status(200).json(editedData)

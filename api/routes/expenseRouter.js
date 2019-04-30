@@ -63,7 +63,6 @@ server.post('/', authenticate, (req,res) => {
       res.status(200).json(expense)
     })
     .catch(err => {
-      console.log(err)
       return errorHelper(500, 'Internal Server Error', res);
     })
 })

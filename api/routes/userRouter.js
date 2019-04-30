@@ -69,7 +69,6 @@ server.get('/:id', authenticate, (req,res) => {
         })
     })
     .catch(err => {
-      console.log(err)
       return errorHelper(500, 'Internal Server Error', res);
     })
 })

@@ -31,11 +31,9 @@ server.get('/:id', authenticate, (req,res) =>{
       let tripWithMembers = foundTrip.map(trip =>{
         let id = trip.tripMemberID
         let member = trip.trip_username
-        let isTripClosed = trip.close_trip
         let tripMember = {
           id: id,
           member_name: member,
-          isTripClosed: isTripClosed
         }
         return tripMember
       })
@@ -46,7 +44,33 @@ server.get('/:id', authenticate, (req,res) =>{
         trip_close_trip: foundTrip[0].close_trip,
         trip_members: tripWithMembers
       }
-      res.json(tripData)
+      return tripData
+    })
+    .then(tripData =>{
+      Trips
+        .findExpenses(tripData.trip_id)
+        .then(tripExpenses => {
+          const thisTripExpenses = tripExpenses.map(expense => {
+            let id = expense.id
+            let trip_expense_name = expense.expense_name
+            let expense_total = expense.expense_total
+            let expenseInfo = {
+              expense_id: id,
+              expense_name: trip_expense_name,
+              expense_total: expense_total
+            }
+            return expenseInfo
+          })
+          const tripWithExpenseData = {
+            trip_id: tripData.trip_id,
+            trip_name: tripData.trip_name,
+            trip_owner_id: tripData.trip_owner_id,
+            trip_close_trip: tripData.trip_close_trip,
+            trip_members: tripData.trip_members,
+            expenseInfo: thisTripExpenses
+          }
+          res.json(tripWithExpenseData)
+        })
     })
     .catch(err => {
       console.log(err)

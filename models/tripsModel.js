@@ -5,6 +5,7 @@ module.exports = {
  findBy,
  findById,
  findMembers,
+ findExpenses,
  add,
  edit,
  remove
@@ -29,6 +30,12 @@ function findMembers(id){
     .leftJoin('tripMembers', 'tripMembers.trip_id', 'trips.id')
     .where('trips.id', id)
     .select("trips.id as trip_id", "trips.trip_name as trip_name", "trips.user_id as tripOwner_id", "trips.close_trip as close_trip", "tripMembers.trip_username as trip_username", "tripMembers.id as tripMemberID")
+}
+
+function findExpenses(id){
+  return db('trips')
+  .leftJoin('expense', 'expense.trip_id', 'trips.id')
+  .where('trips.id', id)
 }
 
 async function add(trips){

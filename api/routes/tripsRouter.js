@@ -29,7 +29,7 @@ server.get('/:id', authenticate, (req,res) =>{
     .findMembers(id)
     .then(foundTrip => {
       let tripWithMembers = foundTrip.map(trip =>{
-        let id = trip.id
+        let id = trip.tripMemberID
         let member = trip.trip_username
         let tripMember = {
           id: id,
@@ -38,14 +38,15 @@ server.get('/:id', authenticate, (req,res) =>{
         return tripMember
       })
       const tripData = {
-        id: foundTrip[0].trip_id,
+        trip_id: foundTrip[0].trip_id,
         trip_name: foundTrip[0].trip_name,
-        trip_owner: foundTrip[0].user_id,
+        trip_owner_id: foundTrip[0].tripOwner_id,
         trip_members: tripWithMembers
       }
-      res.json(foundTrip)
+      res.json(tripData)
     })
     .catch(err => {
+      console.log(err)
       return errorHelper(500, 'Internal Server Error', res);
     })
 })

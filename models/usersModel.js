@@ -4,7 +4,6 @@ module.exports = {
  find,
  findBy,
  findById,
- findWhereMember,
  add,
  edit,
  findByIdWithTrips
@@ -29,13 +28,6 @@ function findById(id){
   return db('users')
     .where({ id })
     .first()
-}
-
-function findWhereMember(username){
-  return db('users')
-    .leftJoin('tripMembers', 'tripMembers.trip_username', 'users.username')
-    .where('username', username)
-
 }
 
 function findByIdWithTrips(id){

@@ -31,9 +31,11 @@ server.get('/:id', authenticate, (req,res) =>{
       let tripWithMembers = foundTrip.map(trip =>{
         let id = trip.tripMemberID
         let member = trip.trip_username
+        let isTripClosed = trip.close_trip
         let tripMember = {
           id: id,
-          member_name: member
+          member_name: member,
+          isTripClosed: isTripClosed
         }
         return tripMember
       })
@@ -41,6 +43,7 @@ server.get('/:id', authenticate, (req,res) =>{
         trip_id: foundTrip[0].trip_id,
         trip_name: foundTrip[0].trip_name,
         trip_owner_id: foundTrip[0].tripOwner_id,
+        trip_close_trip: foundTrip[0].close_trip,
         trip_members: tripWithMembers
       }
       res.json(tripData)

@@ -22,9 +22,11 @@ server.get('/:id', authenticate, (req,res) => {
       let userOwnedTrips = foundUser.map(user => {
         let id = user.id
         let trip_name = user.trip_name
+        let isTripClosed = user.close_trip
         let tripItem = {
           id: id,
-          trip_name: trip_name
+          trip_name: trip_name,
+          isTripClosed: isTripClosed
         }
         return tripItem
       })

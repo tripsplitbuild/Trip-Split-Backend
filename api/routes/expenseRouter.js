@@ -26,11 +26,30 @@ server.get('/:id', authenticate, (req,res) =>{
   const { id } = req.params;
 
   Expense
-    .findById(id)
+    .findMembers(id)
     .then(expense => {
-      res.json(expense)
+      let expenseWithMembers = expense.map(expenseMember =>{
+        let id = expenseMember.id;
+        let member = expenseMember.expense_username;
+        let amountPaid = expenseMember.expense_amount_paid;
+        let memberInfo = {
+          id: id,
+          expenseMemberName: member,
+          amountPaid: amountPaid
+        }
+        return memberInfo
+      })
+      const memberData ={
+        expense_id: expense[0].expense_id,
+        trip_id: expense[0].trip_id,
+        expense_total: expense[0].expense_total,
+        expense_name: expense[0].expense_name,
+        expenseMember: expenseWithMembers
+      }
+      res.json(memberData)
     })
     .catch(err => {
+      console.log(err)
       return errorHelper(500, 'Internal Server Error', res);
     })
 })

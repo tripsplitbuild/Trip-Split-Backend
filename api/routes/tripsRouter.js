@@ -28,6 +28,21 @@ server.get('/:id', authenticate, (req,res) =>{
   Trips
     .findMembers(id)
     .then(foundTrip => {
+      let tripWithMembers = foundTrip.map(trip =>{
+        let id = trip.id
+        let member = trip.trip_username
+        let tripMember = {
+          id: id,
+          member_name: member
+        }
+        return tripMember
+      })
+      const tripData = {
+        id: foundTrip[0].trip_id,
+        trip_name: foundTrip[0].trip_name,
+        trip_owner: foundTrip[0].user_id,
+        trip_members: tripWithMembers
+      }
       res.json(foundTrip)
     })
     .catch(err => {

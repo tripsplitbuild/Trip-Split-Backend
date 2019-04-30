@@ -2,6 +2,7 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('trips', tbl => {
     tbl.increments();
+    tbl.boolean('close_trip')
 
     tbl
       .string('trip_name', 255)

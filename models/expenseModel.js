@@ -4,6 +4,7 @@ module.exports = {
  find,
  findBy,
  findById,
+ findMembers,
  add,
  edit,
  remove
@@ -21,6 +22,12 @@ function findById(id){
   return db('expense')
     .where({ id })
     .first()
+}
+
+function findMembers(id){
+  return db('expense')
+    .leftJoin('expenseMembers', 'expenseMembers.expense_id', 'expense.id')
+    .where('expense.id', id)
 }
 
 async function add(expense){

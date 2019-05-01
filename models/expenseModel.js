@@ -32,7 +32,7 @@ function findMembers(id){
 }
 
 async function add(expense){
-  const [id] = await db('expense').insert(expense);
+  const [id] = await db('expense').insert(expense, "id");
 
   return findById(id);
 }

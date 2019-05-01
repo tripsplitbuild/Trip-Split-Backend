@@ -39,7 +39,7 @@ function findExpenses(id){
 }
 
 async function add(trips){
-  const [id] = await db('trips').insert(trips);
+  const [id] = await db('trips').insert(trips, "id");
 
   return findById(id);
 }

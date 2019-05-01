@@ -39,7 +39,7 @@ server.post('/register', (req,res) => {
 });
 
 server.post('/login', (req,res) => {
-  let { username, password } = req.body;
+  let { username, password } = req.body;  
   Users.findBy({ username })
     .first()
     .then(user => {

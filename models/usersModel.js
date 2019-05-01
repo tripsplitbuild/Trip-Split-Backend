@@ -32,10 +32,8 @@ function findById(id){
 
 function findByIdWithTrips(id){
   return db('users')
-    .innerJoin('trips', 'trips.user_id', 'users.id')
+    .leftJoin('trips', 'trips.user_id', 'users.id')
     .where('users.id', id)
-    // .innerJoin('tripMembers', 'tripMembers.trip_username', 'users.username')
-
 }
 
 async function edit(id, changes){

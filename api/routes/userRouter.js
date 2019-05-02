@@ -112,6 +112,10 @@ server.get('/:id', authenticate, (req,res) => {
 // gender:
 // avatar:
 
+// PUT method users/:id
+// * FRONT END NOTE: axios call requires three argument
+// axios.post( address with id, reqOptions(where tokens are stored), object(see below)
+
 server.put('/:id', authenticate, (req,res) => {
   const { id } = req.params;
 

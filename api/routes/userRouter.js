@@ -53,10 +53,14 @@ server.get('/:id', authenticate, (req,res) => {
         let id = user.id
         let trip_name = user.trip_name
         let isTripClosed = user.close_trip
+        let start_date = user.start_date
+        let end_date = user.end_date
         let tripItem = {
           id: id,
           trip_name: trip_name,
-          isTripClosed: isTripClosed
+          isTripClosed: isTripClosed,
+          start_date: start_date,
+          end_date: end_date
         }
         return tripItem
       })

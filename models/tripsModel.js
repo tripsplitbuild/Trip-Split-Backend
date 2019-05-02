@@ -29,7 +29,7 @@ function findMembers(id){
   return db('trips')
     .leftJoin('tripMembers', 'tripMembers.trip_id', 'trips.id')
     .where('trips.id', id)
-    .select("trips.id as trip_id", "trips.trip_name as trip_name", "trips.user_id as tripOwner_id", "trips.close_trip as close_trip", "tripMembers.trip_username as trip_username", "tripMembers.id as tripMemberID")
+    .select("trips.id as trip_id", "trips.trip_name as trip_name", "trips.user_id as tripOwner_id", "trips.close_trip as close_trip", "tripMembers.trip_username as trip_username", "tripMembers.id as tripMembers_id")
 }
 
 function findExpenses(id){
@@ -39,7 +39,7 @@ function findExpenses(id){
 }
 
 async function add(trips){
-  const [id] = await db('trips').insert(trips);
+  const [id] = await db('trips').insert(trips, "id");
 
   return findById(id);
 }

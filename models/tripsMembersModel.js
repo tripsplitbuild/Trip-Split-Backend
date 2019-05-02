@@ -31,7 +31,7 @@ function findMember(username){
 }
 
 async function add(trip_Members){
-  const [id] = await db('tripMembers').insert(trip_Members);
+  const [id] = await db('tripMembers').insert(trip_Members, "id");
 
   return findById(id);
 }

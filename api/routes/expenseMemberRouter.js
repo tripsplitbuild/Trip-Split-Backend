@@ -21,6 +21,14 @@ server.get('/', authenticate, (req,res) => {
       return errorHelper(500, 'Internal Server Error', res);
     })
 })
+// GET method expenseMember/:id 
+// Returns an object with the following values:
+// {
+//     "id": Integer referring to the primary key (used for editing/deleting),
+//     "expense_username": "String referring to the username of an existing member.",
+//     "expense_id": Integer referring to the expense in which the user paid for. ,
+//     "expense_amount_paid": Float referring to the amount the user paid.
+// }
 
 server.get('/:id', authenticate, (req,res) =>{
   const { id } = req.params;

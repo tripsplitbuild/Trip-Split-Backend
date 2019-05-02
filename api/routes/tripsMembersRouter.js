@@ -11,6 +11,11 @@ const errorHelper = (status, message, res) => {
   res.status(status).json({ err: message })
 }
 
+// ** NOTE:
+// ALL ROUTES USES AUTTHENTICATE MIDDLEWARE, WHICH MEANS SETTING A VALID TOKEN IN THE HEADER'S IS MANDATORY **
+
+
+// get route for all the trip members created.
 server.get('/', authenticate, (req,res) => {
   TripMembers
     .find()
@@ -21,6 +26,13 @@ server.get('/', authenticate, (req,res) => {
       return errorHelper(500, 'Internal Server Error', res);
     })
 })
+
+// a get route using id, will return the following object:
+// {
+//     "id": Integer referring to the trip member id (primary key),
+//     "trip_username": "String referring to a user's username",
+//     "trip_id": Integer referring to the trip id.
+// }
 
 server.get('/:id', authenticate, (req,res) =>{
   const { id } = req.params;
@@ -35,6 +47,10 @@ server.get('/:id', authenticate, (req,res) =>{
     })
 })
 
+// POST method using the following values:
+// "trip_username": "String referring to user that's not the owner of the trip",
+// "trip_id": Integer referring to the trip id.
+
 server.post('/', authenticate, (req,res) => {
   let tripMember = req.body;
 
@@ -48,6 +64,8 @@ server.post('/', authenticate, (req,res) => {
     })
 })
 
+// DELETE method requiring only the id of the object.
+// id is the primary key. each trip member created will have a specific id
 server.delete('/:id', authenticate, (req,res) => {
   const { id } = req.params;
 
@@ -61,6 +79,10 @@ server.delete('/:id', authenticate, (req,res) => {
     })
 })
 
+// PUT method requiring the tripMembers_id
+// can edit the following values: 
+// "trip_username": "String referring to user that's not the owner of the trip",
+// "trip_id": Integer referring to the trip id.
 server.put('/:id', authenticate, (req,res) =>{
   const { id } = req.params;
 

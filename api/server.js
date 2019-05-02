@@ -3,7 +3,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const logger = require('morgan');
 
-
+// Routers
 const authenticateRouter = require('./routes/authenticationRouter.js');
 const userRouter = require('./routes/userRouter.js');
 const tripRouter = require('./routes/tripsRouter.js');
@@ -18,6 +18,10 @@ server.use(logger('dev'));
 server.use(cors());
 server.use(express.json());
 
+// Refer to each end point and use the following Router to have a web address access.
+// example:
+// using a Get by ID Method for users with id: 2 using localhost, your route would be
+// GET method pointing to -> localhost:9090/users/2 --> for local machines.
 server.use('/authentication', authenticateRouter);
 server.use('/users', userRouter);
 server.use('/trips', tripRouter);

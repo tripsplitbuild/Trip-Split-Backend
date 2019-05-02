@@ -13,6 +13,9 @@ const errorHelper = (status, message, res) => {
   res.status(status).json({ err: message })
 }
 
+// ** NOTE:
+// ALL ROUTES USES AUTTHENTICATE MIDDLEWARE, WHICH MEANS SETTING A VALID TOKEN IN THE HEADER'S IS MANDATORY **
+
 // possible table items for users are:
 // id (for registering, this value is automatically created by the database)
 // username - Required object - username for user (unique value - capitalization matters) - register method will throw an error without username.
@@ -107,7 +110,7 @@ server.get('/:id', authenticate, (req,res) => {
 // first_name:
 // last_name:
 // gender:
-// avatar: 
+// avatar:
 
 server.put('/:id', authenticate, (req,res) => {
   const { id } = req.params;

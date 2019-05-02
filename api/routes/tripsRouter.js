@@ -37,6 +37,7 @@ server.get('/', authenticate, (req,res) => {
 //     "trip_close_trip": boolean value to see whether trip is closed or still open.,
 //     "trip_members": [
 //         {
+//            "tripMember_id": refers to the tripMember id not the user but the primary key in tripMember. 
 //             "member_username": member's username
 //         }
 //     ],
@@ -55,9 +56,11 @@ server.get('/:id', authenticate, (req,res) =>{
     .findMembers(id)
     .then(foundTrip => {
       let tripWithMembers = foundTrip.map(trip =>{
+        let tripMember_id = trip.tripMembers_id
         let member = trip.trip_username
         let tripMember = {
-          member_username: member,
+          tripMember_id: tripMember_id,
+          member_username: member
         }
         return tripMember
       })

@@ -21,7 +21,8 @@ server.get('/', authenticate, (req,res) => {
       return errorHelper(500, 'Internal Server Error', res);
     })
 })
-// GET method expenseMember/:id 
+
+// GET method expenseMember/:id
 // Returns an object with the following values:
 // {
 //     "id": Integer referring to the primary key (used for editing/deleting),
@@ -43,6 +44,12 @@ server.get('/:id', authenticate, (req,res) =>{
     })
 })
 
+// POST METHOD can use the following values when sending the request
+// expense_username: refers to the user's username
+// expense_id: refers to the expense id in which this payment belongs to.
+// expense_amount_paid: refers to the amount the specific user paid for.
+
+
 server.post('/', authenticate, (req,res) => {
   let expenseMember = req.body;
 
@@ -56,6 +63,7 @@ server.post('/', authenticate, (req,res) => {
     })
 })
 
+// DELETE METHOD just requires a valid expenseMember id.
 server.delete('/:id', authenticate, (req,res) => {
   const { id } = req.params;
 
@@ -68,6 +76,12 @@ server.delete('/:id', authenticate, (req,res) => {
       return errorHelper(500, 'Internal Server Error', res);
     })
 })
+
+// PUT METHOD requires, an ID,
+// Can edit the following object. 
+// expense_username: refers to the user's username
+// expense_id: refers to the expense id in which this payment belongs to.
+// expense_amount_paid: refers to the amount the specific user paid for.
 
 server.put('/:id', authenticate, (req,res) =>{
   const { id } = req.params;

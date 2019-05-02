@@ -35,9 +35,11 @@ server.get('/', authenticate, (req,res) => {
 //     "trip_name": "String referring to the trip's name",
 //     "trip_owner_id": integer referring to the user id who owns the trip ,
 //     "trip_close_trip": boolean value to see whether trip is closed or still open.,
+//     "trip_start_date": Date for when trip starts
+//     "trip_end_date": Date for when trip ends
 //     "trip_members": [
 //         {
-//            "tripMember_id": refers to the tripMember id not the user but the primary key in tripMember. 
+//            "tripMember_id": refers to the tripMember id not the user but the primary key in tripMember.
 //             "member_username": member's username
 //         }
 //     ],
@@ -69,6 +71,8 @@ server.get('/:id', authenticate, (req,res) =>{
         trip_name: foundTrip[0].trip_name,
         trip_owner_id: foundTrip[0].tripOwner_id,
         trip_close_trip: foundTrip[0].close_trip,
+        trip_start_date: foundTrip[0].start_date,
+        trip_end_date: foundTrip[0].end_date,
         trip_members: tripWithMembers
       }
       return tripData
@@ -93,6 +97,8 @@ server.get('/:id', authenticate, (req,res) =>{
             trip_name: tripData.trip_name,
             trip_owner_id: tripData.trip_owner_id,
             trip_close_trip: tripData.trip_close_trip,
+            trip_start_date: tripData.trip_start_date,
+            trip_end_date: tripData.trip_end_date,
             trip_members: tripData.trip_members,
             expenseInfo: thisTripExpenses
           }
@@ -110,6 +116,8 @@ server.get('/:id', authenticate, (req,res) =>{
 // close_trip: a boolean value true or false,
 // trip_name: 'String referring to the trip's name'
 // user_id: Integer referring to the user id who owns the trip.
+// start_date: Date referring to when trip starts
+// end_date: Date referring to when trip ends
 
 server.post('/', authenticate, (req,res) => {
   let trip = req.body;
@@ -150,6 +158,8 @@ server.delete('/:id', authenticate, (req,res) => {
 //  close_trip: a boolean value true or false,
 //  trip_name: 'String referring to the trip's name'
 //  user_id: Integer referring to the user id who owns the trip.
+// start_date: Date referring to when trip starts
+// end_date: Date referring to when trip ends
 // }
 
 

@@ -14,6 +14,12 @@ exports.up = function(knex, Promise) {
       .inTable('users')
       .onDelete('CASCADE')
       .onUpdate('CASCADE')
+
+    tbl
+      .date('start_date')
+
+    tbl
+      .date('end_date')
   });
 };
 

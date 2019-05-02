@@ -10,7 +10,13 @@ const server = express.Router();
 const errorHelper = (status, message, res) => {
   res.status(status).json({ err: message })
 }
+// ** NOTE:
+// ALL ROUTES USES AUTTHENTICATE MIDDLEWARE, WHICH MEANS SETTING A VALID TOKEN IN THE HEADER'S IS MANDATORY **
 
+
+
+// route to get all the trips as an array of objects.
+// unnecessary for app but used for development.
 server.get('/', authenticate, (req,res) => {
   Trips
     .find()
@@ -22,6 +28,26 @@ server.get('/', authenticate, (req,res) => {
     })
 })
 
+// route /trips/:id
+// GET METHOD using trip's ID returns an object with
+// {
+//     "trip_id": integer referring to the trip's id,
+//     "trip_name": "String referring to the trip's name",
+//     "trip_owner_id": integer referring to the user id who owns the trip ,
+//     "trip_close_trip": boolean value to see whether trip is closed or still open.,
+//     "trip_members": [
+//         {
+//             "member_username": member's username
+//         }
+//     ],
+//     "expenseInfo": [
+//         {
+//             "expense_id": id referring to the expense's id,
+//             "expense_name": "String referring to the expense's name",
+//             "expense_total": Float value referring to the total of the expense.
+//         }
+//     ]
+// }
 server.get('/:id', authenticate, (req,res) =>{
   const { id } = req.params;
 
@@ -29,11 +55,9 @@ server.get('/:id', authenticate, (req,res) =>{
     .findMembers(id)
     .then(foundTrip => {
       let tripWithMembers = foundTrip.map(trip =>{
-        let id = trip.tripMemberID
         let member = trip.trip_username
         let tripMember = {
-          id: id,
-          member_name: member,
+          member_username: member,
         }
         return tripMember
       })
@@ -78,6 +102,12 @@ server.get('/:id', authenticate, (req,res) =>{
     })
 })
 
+// POST method using trips/
+// Values it takes in are:
+// close_trip: a boolean value true or false,
+// trip_name: 'String referring to the trip's name'
+// user_id: Integer referring to the user id who owns the trip.
+
 server.post('/', authenticate, (req,res) => {
   let trip = req.body;
 
@@ -92,6 +122,9 @@ server.post('/', authenticate, (req,res) => {
     })
 })
 
+// DELETE METHOD trips/:id
+// only requires the trip id to delete a trip.
+
 server.delete('/:id', authenticate, (req,res) => {
   const { id } = req.params;
 
@@ -104,6 +137,18 @@ server.delete('/:id', authenticate, (req,res) => {
       return errorHelper(500, 'Internal Server Error', res);
     })
 })
+
+// PUT method trip/:id
+// * FRONT END NOTE: axios call requires three argument
+// axios.post( address with id, reqOptions(where tokens are stored), object(see below)
+
+//object referring to the following:
+// object = {
+//  close_trip: a boolean value true or false,
+//  trip_name: 'String referring to the trip's name'
+//  user_id: Integer referring to the user id who owns the trip.
+// }
+
 
 server.put('/:id', authenticate, (req,res) =>{
   const { id } = req.params;

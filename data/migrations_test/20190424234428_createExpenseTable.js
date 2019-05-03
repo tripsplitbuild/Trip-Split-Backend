@@ -5,7 +5,8 @@ exports.up = function(knex, Promise) {
 
     tbl
       .string('expense_name', 255)
-      .notNullable();
+      .notNullable()
+
     tbl
       .integer('trip_id')
       .unsigned()
@@ -13,6 +14,8 @@ exports.up = function(knex, Promise) {
       .inTable('trips')
       .onDelete('CASCADE')
       .onUpdate('CASCADE')
+      .notNullable()
+
     tbl
       .float('expense_total')
   });

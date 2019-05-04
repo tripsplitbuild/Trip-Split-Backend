@@ -7,6 +7,10 @@ beforeEach(() => {
 
 
 describe('The Users Model', () => {
+  beforeEach(() => {
+    return db('users', 'trips').truncate();
+  });
+
   describe('find function', () =>{
     it ("should return an empty array if there's no users", async () => {
       const users = await Users.find();
@@ -24,6 +28,10 @@ describe('The Users Model', () => {
   })
 
   describe('findBy(filter) function', () => {
+    beforeEach(() => {
+      return db('users', 'trips').truncate();
+    });
+
     it ("should return a user object with regardless of the query", async () => {
       await Users.add({username: 'Cheryl', first_name: "Cheryl", last_name: 'Chen', password: "Password"})
       const users = await Users.findBy({username: 'Cheryl'})
@@ -44,6 +52,10 @@ describe('The Users Model', () => {
   })
 
   describe('The add function', () => {
+    beforeEach(() => {
+      return db('users', 'trips').truncate();
+    });
+
     it ('should return an empty array for an empty database', async() => {
       const users = await db('users')
       expect(users.length).toBe(0)
@@ -68,6 +80,10 @@ describe('The Users Model', () => {
   })
 
   describe('the findById Fn', () => {
+    beforeEach(() => {
+      return db('users', 'trips').truncate();
+    });
+
     it("should return undefined if there is no data from the id", async() => {
       await Users.add({username: 'Cchen', first_name: "Cheryl", last_name: 'Chen-Hwang', password: "Password"})
       await Users.add({username: 'ChenMaster', first_name: "Cheryl", last_name: 'Chen-Hwang', password: "Password"})
@@ -92,12 +108,17 @@ describe('The Users Model', () => {
   })
 
   describe('the findByIdWithTrips Fn', () => {
+    beforeEach(() => {
+      return db('users', 'trips').truncate();
+    });
+
     it('should return an object with the trips included', async() => {
 
       await Users.add({username: 'Cchen', first_name: "Cheryl", last_name: 'Chen-Hwang', password: "Password"})
       await Users.add({username: 'ChenMaster', first_name: "Cheryl", last_name: 'Chen-Hwang', password: "Password"})
-      const trip = await db('trips').insert({"trip_name": "Disney", "user_id": 1, "close_trip": true})
+      const trip = await db('trips').insert({"trip_name": "Disney", "user_id": 1 })
       const userWithID = await Users.findByIdWithTrips(1);
+      console.log(userWithID[0])
       expect(userWithID[0]).toEqual({ id: 1,
         username: 'Cchen',
         first_name: 'Cheryl',
@@ -105,7 +126,7 @@ describe('The Users Model', () => {
         gender: null,
         avatar: null,
         password: 'Password',
-        close_trip: 1,
+        close_trip: 0,
         trip_name: 'Disney',
         user_id: 1,
         start_date: null,
@@ -114,6 +135,10 @@ describe('The Users Model', () => {
   })
 
   describe('edit fn', () => {
+    beforeEach(() => {
+      return db('users', 'trips').truncate();
+    });
+
     it ('should change an object', async() => {
       await Users.add({username: 'Cchen', first_name: "Cheryl", last_name: 'Chen-Hwang', password: "Password"})
       const user = await db('users')

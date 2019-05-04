@@ -12,7 +12,6 @@ describe('the server', () => {
   describe('Get / route', () => {
     it ('should return status 200', async() => {
       const res = await request(server).get('/');
-      console.log(res);
       expect(200);
       expect(res.text).toEqual('{"message":"Welcome"}')
 

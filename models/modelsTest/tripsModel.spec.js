@@ -2,11 +2,15 @@ const db = require('../../data/dbConfig.js');
 const Trips = require('../tripsModel.js');
 
 beforeEach(() => {
-  return db('trips', 'users').truncate();
+  db('users').truncate()
+  return db('trips').truncate();
 });
 
 
 describe('the trips Model', () => {
+  beforeEach(() => {
+    return db('users', 'trips').truncate();
+  })
 
   describe('the find function', () => {
     it('should return an empty array', async() => {
@@ -28,11 +32,16 @@ describe('the trips Model', () => {
   })
 
   describe('the findBy Fn', () => {
-    it ('it should return a user a user object based on the query', async() => {
+    beforeEach(() => {
+      return db('users', 'trips').truncate();
+    })
+
+    it('it should return a user a user object based on the query', async() => {
       await db('users').insert({username: 'Robert', password: 'pass'})
       await db('trips').insert({trip_name: 'Disney', user_id: 1, close_trip: false})
       const trips = await Trips.findBy({"trip_name": "Disney"})
-      console.log(trips)
+      expect(trips[0].id).toBe(1)
+
     })
   })
 })

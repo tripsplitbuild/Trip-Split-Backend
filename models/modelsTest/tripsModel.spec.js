@@ -2,8 +2,9 @@ const db = require('../../data/dbConfig.js');
 const Trips = require('../tripsModel.js');
 
 beforeEach(() => {
-  return db('users','trips').truncate();
+  return db('trips', 'users').truncate();
 });
+
 
 describe('the trips Model', () => {
 
@@ -24,6 +25,14 @@ describe('the trips Model', () => {
         start_date: null,
         end_date: null })
     })
+  })
 
+  describe('the findBy Fn', () => {
+    it ('it should return a user a user object based on the query', async() => {
+      await db('users').insert({username: 'Robert', password: 'pass'})
+      await db('trips').insert({trip_name: 'Disney', user_id: 1, close_trip: false})
+      const trips = await Trips.findBy({"trip_name": "Disney"})
+      console.log(trips)
+    })
   })
 })

@@ -66,3 +66,9 @@
     "expense_amount_paid": 120.34
 }
 ```
+
+## Registration and Login
+
+* To register a user on the app, you need to make a **POST** request to this route, using the user table values without the user id (it is auto-generated). The username and password values are mandatory. The other fields are not.
+
+### https://tripsplitbackend.herokuapp.com/authentication/register

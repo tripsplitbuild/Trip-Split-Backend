@@ -223,6 +223,7 @@
     ]
 }
 ```
+  * ### https://tripsplitbackend.herokuapp.com/expense/:id
 
 * a **POST** request to add members to an expense. The following fields can be seen in the above example of the expense table minus the id .
 
@@ -230,7 +231,7 @@
 
 * a **PUT** request to edit an expense by id. Use the expense table fields to edit the dataset.
 
-  * ### https://tripsplitbackend.herokuapp.com/expense/:id
+
 
 * a **DELETE** request to edit an expense by id. The result will return a 1 if successful.
 

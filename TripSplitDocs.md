@@ -160,7 +160,7 @@
 
   * ### https://tripsplitbackend.herokuapp.com/trips/:id
 
-* a **POST** request to add trips. The response from the server will be like the above example of a trips table:
+* a **POST** request to add trips. The fields are the same from the trips table minus the id as it is auto generated. The response from the server will be like the above example of a trips table:
 
   * ### https://tripsplitbackend.herokuapp.com/trips
 
@@ -182,7 +182,7 @@
 
   * ### https://tripsplitbackend.herokuapp.com/tripMembers/:id
 
-* a **POST** request to add a tripMember. The response would be what was shown in the tripMembers table above.
+* a **POST** request to add a tripMember. The fields are from the tripMembers table without the id. The response would be what was shown in the tripMembers table above.
 
   * ### https://tripsplitbackend.herokuapp.com/tripMembers
 
@@ -193,3 +193,67 @@
 * a **DELETE** request to delete a tripMember using an id. It returns a 1 if successful.
 
   * ### https://tripsplitbackend.herokuapp.com/tripMembers/:id
+
+
+## Expense related endpoints
+
+* a **GET** request to see all the expenses regardless of the trip id.
+
+  * ### https://tripsplitbackend.herokuapp.com/expense
+
+* a **GET** request by id to see an expense based on that expense id. It returns the following data which include the expense members linked to that id:
+
+```
+{
+    "expense_id": 1,
+    "trip_id": 1,
+    "expense_total": 442.29,
+    "expense_name": "Four Seasons Hotel Expense",
+    "expenseMember": [
+        {
+            "expenseMember_id": 1,
+            "expenseMemberName": "max",
+            "amountPaid": 120.34
+        },
+        {
+            "expenseMember_id": 2,
+            "expenseMemberName": "pandaMan",
+            "amountPaid": 120.34
+        }
+    ]
+}
+```
+
+* a **POST** request to add members to an expense. The following fields can be seen in the above example of the expense table minus the id .
+
+  * ### https://tripsplitbackend.herokuapp.com/expense
+
+* a **PUT** request to edit an expense by id. Use the expense table fields to edit the dataset.
+
+  * ### https://tripsplitbackend.herokuapp.com/expense/1
+
+* a **DELETE** request to edit an expense by id. The result will return a 1 if successful.
+
+  * ### https://tripsplitbackend.herokuapp.com/expense/1
+
+## Expense Trip related endpoints
+
+* a **GET** request to view all the expenseMembers regardless of the expense id.
+
+  * ### https://tripsplitbackend.herokuapp.com/expenseMember
+
+* a **GET** request by id to view the expenseMember. The result is similar to the expenseMembers tables above.
+
+  * ### https://tripsplitbackend.herokuapp.com/expenseMember/:id
+
+* a **POST** request to add an expenseMember. Use the expenseMember table for the fields minus the id as it is auto generated.
+
+  * ### https://tripsplitbackend.herokuapp.com/expenseMember
+
+* a **PUT** request by id to edit an expenseMember. Use expenseMember table to edit the expenseMember fields.
+
+  * ### https://tripsplitbackend.herokuapp.com/expenseMember/:id
+
+* a **DELETE** request by id to delete an expenseMember. The result returns a 1 if successful.
+
+  * ### https://tripsplitbackend.herokuapp.com/expenseMember/:id

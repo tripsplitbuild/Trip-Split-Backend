@@ -79,7 +79,36 @@
 
 ## User related  endpoints
 
-* a **GET** request to get a user by user id :
+* a **GET** request to get a user by user id. The response would contain user data minus the password as well an array of trips created under the user's id as well as trips that the user is a part of. A response with that contains all the data fully populated returns the following:
+
+```
+{
+    "username": "pandaMan",
+    "first_name": "user",
+    "last_name": "name",
+    "gender": "Male",
+    "avatar": "url link or a string",
+    "ownedTrips": [
+        {
+            "id": 1,
+            "trip_name": "Disney World",
+            "isTripClosed": false,
+            "start_date": "2019-08-18T00:00:00.000Z",
+            "end_date": "2019-08-31T00:00:00.000Z"
+        }
+    ],
+    "memberTrips": [
+        {
+            "trip_id": 2,
+            "trip_name": "Wakanda"
+        },
+        {
+            "trip_id": 3,
+            "trip_name": "California"
+        }
+    ]
+}
+```
 
   * ### https://tripsplitbackend.herokuapp.com/users/:id
 
@@ -93,7 +122,7 @@
 
   * ### https://tripsplitbackend.herokuapp.com/trips
 
-* a **GET** request to get trips by trip id. The response from the server will be different as it contains a data to show the array of tripMembers and an array of expenses in that trip. It will contain null values if no members or expenses are made but if it contains all the data it should look something like:
+* a **GET** request to get trips by trip id. The response from the server will be different as it contains a data to show the array of tripMembers and an array of expenses in that trip. A response with that contains all the data fully populated returns the following:
 
 ```
 {
@@ -133,12 +162,34 @@
 
 * a **POST** request to add trips. The response from the server will be like the above example of a trips table:
 
-  * ### https://tripsplitbackend.herokuapp.com//trips
+  * ### https://tripsplitbackend.herokuapp.com/trips
 
-* a **PUT** request to edit trips by id :
+* a **PUT** request to edit trips by id. Edit the trip info using the fields from the trip's table.
+
+  * ### https://tripsplitbackend.herokuapp.com/trips/:id
+
+* a **DELETE** request to delete a trip by id. Will return a 1 if successful:
 
   * ### https://tripsplitbackend.herokuapp.com/trips/:id
 
-* a **DELETE** request to delete a trip by id:
+## Trip Member related endpoints
 
-  * ### https://tripsplitbackend.herokuapp.com/trips/:id
+* a **GET** request to see all the trips regardless of the trip id.
+
+  * ### https://tripsplitbackend.herokuapp.com/tripMembers
+
+* a **GET** request to see tripMembers by id. This would return just the specific member username and the trip id.
+
+  * ### https://tripsplitbackend.herokuapp.com/tripMembers/:id
+
+* a **POST** request to add a tripMember. The response would be what was shown in the tripMembers table above.
+
+  * ### https://tripsplitbackend.herokuapp.com/tripMembers
+
+* a **PUT** request to edit a tripMember using an id. Use the fields from above to edit a specfic tripMember by id.
+
+  * ### https://tripsplitbackend.herokuapp.com/tripMembers/:id
+
+* a **DELETE** request to delete a tripMember using an id. It returns a 1 if successful.
+
+  * ### https://tripsplitbackend.herokuapp.com/tripMembers/:id
